@@ -24,7 +24,7 @@ $(function() {
 	  s = s.replace(/data\/dataset1\//g,"");
 	  let p = bindings[i]["p"]["value"];
 	  p = p.replace(/http\:\/\/www\.w3\.org\/2000\/01\/rdf\-schema#/, "rdfs:");
-	  p = p.replace(/http\:\/\/challenge\.knowledge\-graph\.jp\/ontology/kgrc\.owl#/, "kgrc-p:");
+	  p = p.replace(/http\:\/\/challenge\.knowledge\-graph\.jp\/ontology\/kgrc\.owl#/, "kgrc-p:");
 	  let o = bindings[i]["o"]["value"];
 	  let oType = bindings[i]["o"]["type"];
 
