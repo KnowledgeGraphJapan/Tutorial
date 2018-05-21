@@ -25,9 +25,11 @@
     <textarea cols="100" rows="7" id="sparql">
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rc: <http://challenge.knowledge-graph.jp/ontology/kgrc.owl#>
+PREFIX rcd: <http://challenge.knowledge-graph.jp/data/dataset1/>
 SELECT ?s ?p ?o
 WHERE {
 ?s ?p ?o .
+#filter(?s = rcd:155) #?sを指定してグラフを取得
 filter(?p != rdfs:comment)
 filter(?o != rc:Situation)
 filter(?o != rc:Action)
