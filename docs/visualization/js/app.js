@@ -24,7 +24,7 @@ $(function() {
 	  s = s.replace(/data\/dataset1\//g,"");
 	  let p = bindings[i]["p"]["value"];
 	  p = p.replace(/http\:\/\/www\.w3\.org\/2000\/01\/rdf\-schema#/, "rdfs:");
-	  p = p.replace(/http\:\/\/challenge\.knowledge\-graph\.jp\//, "rc:");
+	  p = p.replace(/http\:\/\/challenge\.knowledge\-graph\.jp\/ontology/kgrc.owl#/, "kgrc-p:");
 	  let o = bindings[i]["o"]["value"];
 	  let oType = bindings[i]["o"]["type"];
 
@@ -37,7 +37,7 @@ $(function() {
 	  }
 	  if(nodeO == undefined) {
 	    if(oType == "literal") {
-	      allNodes.push({id: o, label: o, title: o,  shape: "box", color: { background: "rgba(255,255,255,0.7)"}});
+	      allNodes.push({id: o + "literal", label: o, title: o,  shape: "box", color: { background: "rgba(255,255,255,0.7)"}});
 	    } else {
 	      allNodes.push({id: o, label: o, shape: "dot", size: 7, color: { border: "#2B7CE9", background: "#D2E5FF"}})
 	    }
