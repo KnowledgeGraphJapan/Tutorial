@@ -31,18 +31,29 @@ $(function() {
 	  o = o.replace(/http\:\/\/challenge\.knowledge\-graph\.jp\//g,"");
 	  o = o.replace(/data\/dataset1\//g,"");
 	  let nodeS = nodes.get(s);
-	  let nodeO = nodes.get(o);
 	  if(nodeS == undefined) {
 	    allNodes.push({id: s, label: s, shape: "dot", size: 7, color: { border: "#2B7CE9", background: "#D2E5FF"}});
 	  }
+	  let nodeO = undefined;
+	  if(oType == "uri") {
+	    nodeO = nodes.get(o);
+	  } else {
+	    nodeO = nodes.get(o + "literal");
+	  }
 	  if(nodeO == undefined) {
-	    if(oType == "literal") {
-	      allNodes.push({id: o + "literal", label: o, title: o,  shape: "box", color: { background: "rgba(255,255,255,0.7)"}});
-	    } else {
+	    if(oType == "uri") {
 	      allNodes.push({id: o, label: o, shape: "dot", size: 7, color: { border: "#2B7CE9", background: "#D2E5FF"}})
+	    } else {
+	      if(o != "") {//日本語または英語ラベルがない場合は表示しない
+		allNodes.push({id: o + "literal", label: o, title: o,  shape: "box", color: { background: "rgba(255,255,255,0.7)"}});
+	      }
 	    }
 	  }
-	  allEdges.push({from: s, to: o, title: p, arrows: {to: {enabled: true}}});
+	  if(oType == "uri") {
+	    allEdges.push({from: s, to: o, title: p, arrows: {to: {enabled: true}}});
+	  } else {
+	    allEdges.push({from: s, to: o + "literal", title: p, arrows: {to: {enabled: true}}});
+	  }
 	  i=(i+1)|0;
 	}
 	console.log(allNodes.length);
