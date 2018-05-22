@@ -6,7 +6,17 @@ $(function() {
 
   var allNodes = [];
   var allEdges = [];
+
+  function clear() {
+    allNodes = [];
+    allEdges = [];
+    nodes.clear();
+    edges.clear();
+    network.redraw();
+  }
+
   function getData(endpoint, sparql) {
+    clear();
     let url = endpoint + "?query=" + encodeURIComponent(sparql);
     $.ajax({
       url: url,
@@ -126,6 +136,10 @@ $(function() {
   $(document).on("click", "#search", function() {
     let text = $("#search_text").val();
     highlight(text);
+  });
+
+  $(document).on("click", "#clear", function() {
+    clear();
   });
 
   $(document).on("click", "#stop", function() {
