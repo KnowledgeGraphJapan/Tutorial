@@ -24,16 +24,16 @@
     <h1>Linked Data visualization tool</h1>
     <textarea cols="100" rows="7" id="sparql">
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rc: <http://challenge.knowledge-graph.jp/ontology/kgrc.owl#>
-PREFIX rcd: <http://challenge.knowledge-graph.jp/data/dataset1/>
+PREFIX ko: <http://challenge.knowledge-graph.jp/ontology/kgrc.owl#>
+PREFIX kd: <http://challenge.knowledge-graph.jp/data/dataset1/>
 SELECT ?s ?p ?o
 WHERE {
 ?s ?p ?o .
-#filter(?s = rcd:155) #?sを指定してグラフを取得
+#filter(?s = kd:155) #?sを指定してグラフを取得
 filter(?p != rdfs:comment)
-filter(?o != rc:Situation)
-filter(?o != rc:Action)
-filter(?o != rc:Object)
+filter(?o != ko:Situation)
+filter(?o != ko:Action)
+filter(?o != ko:Object)
 }</textarea>
     <br>
     SPARQL Endpoint: <input type="text" id="endpoint" value="http://lod.hozo.jp/repositories/KGRC">

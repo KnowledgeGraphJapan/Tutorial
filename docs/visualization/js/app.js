@@ -1,12 +1,21 @@
 /* created by Shusaku Egami (http://idease.info/profile/) */
 
 $(function() {
+  /* variables start */
+  const kgrc = "http://challenge.knowledge-graph.jp/";
+  const kd = "http://challenge.knowledge-graph.jp/data/dataset1/";
+  const ko = "http://challenge.knowledge-graph.jp/ontology/kgrc.owl#";
+  const rdfs = "http://www.w3.org/2000/01/rdf-schema#";
+  const rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+
   var nodes = new vis.DataSet();
   var edges = new vis.DataSet();
 
   var allNodes = [];
   var allEdges = [];
+  /* variables end */
 
+  /* function start */
   function clear() {
     allNodes = [];
     allEdges = [];
@@ -26,20 +35,20 @@ $(function() {
       },
       success: function(data) {
 	let bindings = data.results.bindings;
-	i = 0;
+	let i = 0;
 	console.log(bindings);
 	while(i < bindings.length) {
 	  let s = bindings[i]["s"]["value"];
-	  s = s.replace(/http\:\/\/challenge\.knowledge\-graph\.jp\//g,"");
-	  s = s.replace(/data\/dataset1\//g,"");
+	  s = s.replace(kd,"kd:");
+	  s = s.replace(ko, "ko:");
 	  let p = bindings[i]["p"]["value"];
-	  p = p.replace(/http\:\/\/www\.w3\.org\/2000\/01\/rdf\-schema#/, "rdfs:");
-	  p = p.replace(/http\:\/\/challenge\.knowledge\-graph\.jp\/ontology\/kgrc\.owl#/, "kgrc-p:");
+	  p = p.replace(rdfs, "rdfs:");
+	  p = p.replace(ko, "ko:");
 	  let o = bindings[i]["o"]["value"];
 	  let oType = bindings[i]["o"]["type"];
 
-	  o = o.replace(/http\:\/\/challenge\.knowledge\-graph\.jp\//g,"");
-	  o = o.replace(/data\/dataset1\//g,"");
+	  o = o.replace(kd,"kd:");
+	  o = o.replace(ko,"ko:");
 	  let nodeS = nodes.get(s);
 	  if(nodeS == undefined) {
 	    allNodes.push({id: s, label: s, shape: "dot", size: 7, color: { border: "#2B7CE9", background: "#D2E5FF"}});
@@ -94,6 +103,80 @@ $(function() {
     nodes.update(hits);
   }
 
+  function expand(selectNodeId) {
+    let endpoint = $("#endpoint").val();
+    let sparql = "PREFIX kd: <" + kd + ">\n"
+    	+ "PREFIX ko: <" + ko +  ">\n"
+    	+ "SELECT * WHERE {\n"
+    	+ "{ " + selectNodeId + " ?p ?o . }\n"
+    	+ "UNION {?s ?p2 " + selectNodeId + " . }}";
+    console.log(sparql)
+    let url = endpoint + "?query=" + encodeURIComponent(sparql);
+    $.ajax({
+      url: url,
+      type: "GET",
+      headers: {
+	Accept: "application/sparql-results+json"
+      },
+      success: function(data) {
+	let bindings = data.results.bindings;
+	for(var i=0; i<bindings.length; i++) {
+	  //展開ノードが持つプロパティについて
+	  if(bindings[i]["p"]) {
+	    let o = bindings[i]["o"]["value"];
+	    o = o.replace(kd, "kd:");
+	    o = o.replace(ko, "ko:");
+	    let oType = bindings[i]["o"]["type"];
+	    let nodeO = undefined;
+	    let p = bindings[i]["p"]["value"];
+	    p = p.replace(rdfs, "rdfs:");
+	    p = p.replace(ko, "ko:");
+	    if(oType == "uri") {
+	      nodeO = nodes.get(o);
+	    } else {
+	      nodeO = nodes.get(o + "literal");
+	    }
+	    if(nodeO == undefined) {
+	      if(oType == "uri") {
+		allNodes.push({id: o, label: o, shape: "dot", size: 7, color: { border: "#2B7CE9", background: "#D2E5FF"}})
+	      } else {
+		if(o != "") {//日本語または英語ラベルがない場合は表示しない
+		  allNodes.push({id: o + "literal", label: o, title: o,  shape: "box", color: { background: "rgba(255,255,255,0.7)"}});
+		}
+	      }
+	    }
+	    if(oType == "uri") {
+	      allEdges.push({from: selectNodeId, to: o, title: p, arrows: {to: {enabled: true}}});
+	    } else {
+	      allEdges.push({from: selectNodeId, to: o + "literal", title: p, arrows: {to: {enabled: true}}});
+	    }
+	  }
+	  //展開ノードの被リンク
+	  else {
+	    let s = bindings[i]["s"]["value"];
+	    s = s.replace(kd, "kd:");
+	    s = s.replace(ko, "ko:");
+	    let nodeS = undefined;
+	    let p2 = bindings[i]["p2"]["value"];
+	    p2 = p2.replace(rdfs, "rdfs:");
+	    p2 = p2.replace(ko, "ko:");
+	    nodeS = nodes.get(s);
+	    if(nodeS == undefined) {
+	      allNodes.push({id: s, label: s, shape: "dot", size: 7, color: { border: "#2B7CE9", background: "#D2E5FF"}})
+	    }
+	    allEdges.push({from: s, to: selectNodeId, title: p2, arrows: {to: {enabled: true}}});
+	  }
+	  nodes.update(allNodes);
+	  edges.update(allEdges);
+	}
+	console.log(data);
+      }
+    });
+  }
+
+  /* function end */
+
+  /* network confing and main */
   let container = document.getElementById('mynetwork');
   let data = {
     nodes: nodes,
@@ -121,10 +204,18 @@ $(function() {
   };
   var network = new vis.Network(container, data, options);
 
+  /* network config and main */
+
   /* event handler */
 
-  network.on("doubleClick", function () {
-        network.setOptions( { physics: false } );
+  network.on("doubleClick", function (params) {
+    network.setOptions( { physics: false } );
+    let selectNodeId = params.nodes[0];
+    //ダブルクリックされたオブジェクトがリテラルでないノード
+    if(selectNodeId != undefined && selectNodeId.includes("literal") == false) {
+      expand(selectNodeId);
+      network.setOptions( { physics: true } );
+    }
   });
 
   $(document).on("click", "#load", function() {
