@@ -168,6 +168,8 @@ $(function() {
 	  }
 	  nodes.update(allNodes);
 	  edges.update(allEdges);
+
+	  network.setOptions( { physics: true } );
 	}
 	console.log(data);
       }
@@ -214,7 +216,6 @@ $(function() {
     //ダブルクリックされたオブジェクトがリテラルでないノード
     if(selectNodeId != undefined && selectNodeId.includes("literal") == false) {
       expand(selectNodeId);
-      network.setOptions( { physics: true } );
     }
   });
 
