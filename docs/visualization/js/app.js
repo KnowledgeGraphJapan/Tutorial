@@ -2,9 +2,8 @@
 
 $(function() {
   /* variables start */
-  const kgrc = "http://challenge.knowledge-graph.jp/";
-  const kd = "http://challenge.knowledge-graph.jp/data/dataset1/";
-  const ko = "http://challenge.knowledge-graph.jp/ontology/kgrc.owl#";
+  const kd = "http://kgc.knowledge-graph.jp/data/SpeckledBand/";
+  const kgc = "http://kgc.knowledge-graph.jp/ontology/kgc.owl#";
   const rdfs = "http://www.w3.org/2000/01/rdf-schema#";
   const rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
@@ -40,15 +39,15 @@ $(function() {
 	while(i < bindings.length) {
 	  let s = bindings[i]["s"]["value"];
 	  s = s.replace(kd,"kd:");
-	  s = s.replace(ko, "ko:");
+	  s = s.replace(kgc, "kgc:");
 	  let p = bindings[i]["p"]["value"];
 	  p = p.replace(rdfs, "rdfs:");
-	  p = p.replace(ko, "ko:");
+	  p = p.replace(kgc, "kgc:");
 	  let o = bindings[i]["o"]["value"];
 	  let oType = bindings[i]["o"]["type"];
 
 	  o = o.replace(kd,"kd:");
-	  o = o.replace(ko,"ko:");
+	  o = o.replace(kgc,"kgc:");
 	  let nodeS = nodes.get(s);
 	  if(nodeS == undefined) {
 	    allNodes.push({id: s, label: s, shape: "dot", size: 7, color: { border: "#2B7CE9", background: "#D2E5FF"}});
@@ -106,7 +105,7 @@ $(function() {
   function expand(selectNodeId) {
     let endpoint = $("#endpoint").val();
     let sparql = "PREFIX kd: <" + kd + ">\n"
-    	+ "PREFIX ko: <" + ko +  ">\n"
+    	+ "PREFIX kgc: <" + kgc +  ">\n"
     	+ "SELECT * WHERE {\n"
     	+ "{ " + selectNodeId + " ?p ?o . }\n"
     	+ "UNION {?s ?p2 " + selectNodeId + " . }}";
@@ -125,12 +124,12 @@ $(function() {
 	  if(bindings[i]["p"]) {
 	    let o = bindings[i]["o"]["value"];
 	    o = o.replace(kd, "kd:");
-	    o = o.replace(ko, "ko:");
+	    o = o.replace(kgc, "kgc:");
 	    let oType = bindings[i]["o"]["type"];
 	    let nodeO = undefined;
 	    let p = bindings[i]["p"]["value"];
 	    p = p.replace(rdfs, "rdfs:");
-	    p = p.replace(ko, "ko:");
+	    p = p.replace(kgc, "kgc:");
 	    if(oType == "uri") {
 	      nodeO = nodes.get(o);
 	    } else {
@@ -155,11 +154,11 @@ $(function() {
 	  else {
 	    let s = bindings[i]["s"]["value"];
 	    s = s.replace(kd, "kd:");
-	    s = s.replace(ko, "ko:");
+	    s = s.replace(kgc, "kgc:");
 	    let nodeS = undefined;
 	    let p2 = bindings[i]["p2"]["value"];
 	    p2 = p2.replace(rdfs, "rdfs:");
-	    p2 = p2.replace(ko, "ko:");
+	    p2 = p2.replace(kgc, "kgc:");
 	    nodeS = nodes.get(s);
 	    if(nodeS == undefined) {
 	      allNodes.push({id: s, label: s, shape: "dot", size: 7, color: { border: "#2B7CE9", background: "#D2E5FF"}})
