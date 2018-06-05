@@ -51,10 +51,9 @@
 	PREFIX kd: <http://kgc.knowledge-graph.jp/data/SpeckledBand/>
 	SELECT ?s ?p ?o
 	WHERE {
-	?id ko:hasPredicate kd:die ;
+	?id kgc:hasPredicate kd:die ;
 	   kgc:subject ?s .  
 	   ?s ?p ?o .
-	   }
 	}
       </textarea>
       <textarea class="sparql" name="sparql">
