@@ -2,7 +2,6 @@
 
 $(function() {
   /* variables start */
-  const kd = "http://kgc.knowledge-graph.jp/data/SpeckledBand/";
   const kgc = "http://kgc.knowledge-graph.jp/ontology/kgc.owl#";
   const rdfs = "http://www.w3.org/2000/01/rdf-schema#";
   const rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
@@ -23,7 +22,7 @@ $(function() {
     network.redraw();
   }
 
-  function getData(endpoint, sparql) {
+  function getData(endpoint, sparql, baseURI) {
     clear();
     let url = endpoint + "?query=" + encodeURIComponent(sparql);
     $.ajax({
@@ -38,7 +37,9 @@ $(function() {
 	console.log(bindings);
 	while(i < bindings.length) {
 	  let s = bindings[i]["s"]["value"];
-	  s = s.replace(kd,"kd:");
+	  if(baseURI!=undefined) {
+	    s = s.replace(baseURI,"kd:");
+	  }
 	  s = s.replace(kgc, "kgc:");
 	  let p = bindings[i]["p"]["value"];
 	  p = p.replace(rdfs, "rdfs:");
@@ -46,7 +47,9 @@ $(function() {
 	  let o = bindings[i]["o"]["value"];
 	  let oType = bindings[i]["o"]["type"];
 
-	  o = o.replace(kd,"kd:");
+	  if(baseURI!=undefined){
+	    o = o.replace(baseURI,"kd:");
+	  }
 	  o = o.replace(kgc,"kgc:");
 	  let nodeS = nodes.get(s);
 	  if(nodeS == undefined) {
@@ -102,9 +105,9 @@ $(function() {
     nodes.update(hits);
   }
 
-  function expand(selectNodeId) {
+  function expand(selectNodeId, baseURI) {
     let endpoint = $("#endpoint").val();
-    let sparql = "PREFIX kd: <" + kd + ">\n"
+    let sparql = "PREFIX kd: <" + baseURI + ">\n"
     	+ "PREFIX kgc: <" + kgc +  ">\n"
     	+ "SELECT * WHERE {\n"
     	+ "{ " + selectNodeId + " ?p ?o . }\n"
@@ -123,7 +126,7 @@ $(function() {
 	  //展開ノードが持つプロパティについて
 	  if(bindings[i]["p"]) {
 	    let o = bindings[i]["o"]["value"];
-	    o = o.replace(kd, "kd:");
+	    o = o.replace(baseURI, "kd:");
 	    o = o.replace(kgc, "kgc:");
 	    let oType = bindings[i]["o"]["type"];
 	    let nodeO = undefined;
@@ -153,7 +156,7 @@ $(function() {
 	  //展開ノードの被リンク
 	  else {
 	    let s = bindings[i]["s"]["value"];
-	    s = s.replace(kd, "kd:");
+	    s = s.replace(baseURI, "kd:");
 	    s = s.replace(kgc, "kgc:");
 	    let nodeS = undefined;
 	    let p2 = bindings[i]["p2"]["value"];
@@ -212,16 +215,18 @@ $(function() {
   network.on("doubleClick", function (params) {
     network.setOptions( { physics: false } );
     let selectNodeId = params.nodes[0];
+    let baseURI = $("#baseURI").val();
     //ダブルクリックされたオブジェクトがリテラルでないノード
     if(selectNodeId != undefined && selectNodeId.includes("literal") == false) {
-      expand(selectNodeId);
+      expand(selectNodeId, baseURI);
     }
   });
 
   $(document).on("click", "#load", function() {
     let sparql = $("#sparql").val();
     let endpoint = $("#endpoint").val();
-    getData(endpoint, sparql);
+    let baseURI = $("#baseURI").val();
+    getData(endpoint, sparql, baseURI);
   });
 
   $(document).on("click", "#search", function() {
@@ -236,6 +241,7 @@ $(function() {
   $(document).on("click", "#stop", function() {
     network.setOptions( { physics: false } );
   });
+
 
   /* event handler end */
 
