@@ -26,6 +26,10 @@
 #必ず?s ?p ?oの結果が帰ってくるようなクエリを書いてください
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX kgc: <http://kgc.knowledge-graph.jp/ontology/kgc.owl#>
+PREFIX kdsb: <http://kgc.knowledge-graph.jp/data/SpeckledBand>
+PREFIX kdci: <http://kgc.knowledge-graph.jp/data/ACaseOfIdentity>
+PREFIX kddf: <http://kgc.knowledge-graph.jp/data/DevilsFoot>
+PREFIX kdcm: <http://kgc.knowledge-graph.jp/data/CrookedMan>
 SELECT DISTINCT ?s ?p ?o
 FROM <http://kgc.knowledge-graph.jp/data/2019/SpeckledBand>
 #FROM <http://kgc.knowledge-graph.jp/data/2019/DancingMen>
@@ -42,7 +46,7 @@ filter(?o != kgc:Object)
 }</textarea>
     <br>
     SPARQL Endpoint: <input type="text" id="endpoint" value="http://lod.hozo.jp/repositories/kgc2019"><br>
-    Base URI: <input type="text" id="baseURI" value="http://kgc.knowledge-graph.jp/data/SpeckledBand/"><br>
+    <!--Base URI: <input type="text" id="baseURI" value="http://kgc.knowledge-graph.jp/data/SpeckledBand/"><br>-->
     <button id="load">load</button>
     <button id="stop">stop</button>
     <button id="clear">clear</button>
