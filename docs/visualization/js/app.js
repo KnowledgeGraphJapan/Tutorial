@@ -123,6 +123,11 @@ $(function() {
   function expand(selectNodeId, baseURI) {
     let endpoint = $("#endpoint").val();
     let sparql = "PREFIX kd: <" + baseURI + ">\n"
+      + "PREFIX kdsb: <" + kdsb +  ">\n"
+      + "PREFIX kddm: <" + kddm +  ">\n"
+      + "PREFIX kdci: <" + kdci +  ">\n"
+      + "PREFIX kddf: <" + kddf +  ">\n"
+      + "PREFIX kdcm: <" + kdcm +  ">\n"
       + "PREFIX kgc: <" + kgc +  ">\n"
       + "SELECT * WHERE {\n"
       + "{ " + selectNodeId + " ?p ?o . }\n"
