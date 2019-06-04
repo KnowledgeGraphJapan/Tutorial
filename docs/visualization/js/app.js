@@ -3,6 +3,11 @@
 $(function() {
   /* variables start */
   const kgc = "http://kgc.knowledge-graph.jp/ontology/kgc.owl#";
+  const kdsb = "http://kgc.knowledge-graph.jp/data/SpeckledBand/";
+  const kddm = "http://kgc.knowledge-graph.jp/data/DancingMen/";
+  const kdci = "http://kgc.knowledge-graph.jp/data/ACaseOfIdentity/";
+  const kddf = "http://kgc.knowledge-graph.jp/data/DevilsFoot/";
+  const kdcm = "http://kgc.knowledge-graph.jp/data/CrookedMan/";
   const rdfs = "http://www.w3.org/2000/01/rdf-schema#";
   const rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
@@ -40,6 +45,11 @@ $(function() {
 	  if(baseURI!=undefined) {
 	    s = s.replace(baseURI,"kd:");
 	  }
+	  s = s.replace(kdsb, "kdsb:");
+	  s = s.replace(kddm, "kddm:");
+	  s = s.replace(kdci, "kdci:");
+	  s = s.replace(kddf, "kddf:");
+	  s = s.replace(kdcm, "kdcm:");
 	  s = s.replace(kgc, "kgc:");
 	  let p = bindings[i]["p"]["value"];
 	  p = p.replace(rdfs, "rdfs:");
@@ -50,6 +60,11 @@ $(function() {
 	  if(baseURI!=undefined){
 	    o = o.replace(baseURI,"kd:");
 	  }
+	  o = o.replace(kdsb, "kdsb:");
+	  o = o.replace(kddm, "kddm:");
+	  o = o.replace(kdci, "kdci:");
+	  o = o.replace(kddf, "kddf:");
+	  o = o.replace(kdcm, "kdcm:");
 	  o = o.replace(kgc,"kgc:");
 	  let nodeS = nodes.get(s);
 	  if(nodeS == undefined) {
@@ -81,7 +96,7 @@ $(function() {
 	nodes.update(allNodes);
 	edges.update(allEdges);
 
-        network.setOptions( { physics: true } );
+	network.setOptions( { physics: true } );
 	network.redraw();
       }
     });
@@ -108,10 +123,10 @@ $(function() {
   function expand(selectNodeId, baseURI) {
     let endpoint = $("#endpoint").val();
     let sparql = "PREFIX kd: <" + baseURI + ">\n"
-    	+ "PREFIX kgc: <" + kgc +  ">\n"
-    	+ "SELECT * WHERE {\n"
-    	+ "{ " + selectNodeId + " ?p ?o . }\n"
-    	+ "UNION {?s ?p2 " + selectNodeId + " . }}";
+      + "PREFIX kgc: <" + kgc +  ">\n"
+      + "SELECT * WHERE {\n"
+      + "{ " + selectNodeId + " ?p ?o . }\n"
+      + "UNION {?s ?p2 " + selectNodeId + " . }}";
     console.log(sparql)
     let url = endpoint + "?query=" + encodeURIComponent(sparql);
     $.ajax({
@@ -127,6 +142,11 @@ $(function() {
 	  if(bindings[i]["p"]) {
 	    let o = bindings[i]["o"]["value"];
 	    o = o.replace(baseURI, "kd:");
+	    o = o.replace(kdsb, "kdsb:");
+	    o = o.replace(kddm, "kddm:");
+	    o = o.replace(kdci, "kdci:");
+	    o = o.replace(kddf, "kddf:");
+	    o = o.replace(kdcm, "kdcm:");
 	    o = o.replace(kgc, "kgc:");
 	    let oType = bindings[i]["o"]["type"];
 	    let nodeO = undefined;
@@ -157,6 +177,11 @@ $(function() {
 	  else {
 	    let s = bindings[i]["s"]["value"];
 	    s = s.replace(baseURI, "kd:");
+	    s = s.replace(kdsb, "kdsb:");
+	    s = s.replace(kddm, "kddm:");
+	    s = s.replace(kdci, "kdci:");
+	    s = s.replace(kddf, "kddf:");
+	    s = s.replace(kdcm, "kdcm:");
 	    s = s.replace(kgc, "kgc:");
 	    let nodeS = undefined;
 	    let p2 = bindings[i]["p2"]["value"];
