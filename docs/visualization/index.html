@@ -26,8 +26,12 @@
 #必ず?s ?p ?oの結果が帰ってくるようなクエリを書いてください
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX kgc: <http://kgc.knowledge-graph.jp/ontology/kgc.owl#>
-PREFIX kd: <http://kgc.knowledge-graph.jp/data/SpeckledBand/>
-SELECT ?s ?p ?o
+SELECT DISTINCT ?s ?p ?o
+FROM <http://kgc.knowledge-graph.jp/data/2019/SpeckledBand>
+#FROM <http://kgc.knowledge-graph.jp/data/2019/DancingMen>
+#FROM <http://kgc.knowledge-graph.jp/data/2019/ACaseOfIdentity>
+#FROM <http://kgc.knowledge-graph.jp/data/2019/DevilsFoot>
+#FROM <http://kgc.knowledge-graph.jp/data/2019/CrookedMan>
 WHERE {
 ?s ?p ?o .
 #filter(?s = kd:155) #?sを指定してグラフを取得
@@ -37,7 +41,7 @@ filter(?o != kgc:Action)
 filter(?o != kgc:Object)
 }</textarea>
     <br>
-    SPARQL Endpoint: <input type="text" id="endpoint" value="http://lod.hozo.jp/repositories/kgc"><br>
+    SPARQL Endpoint: <input type="text" id="endpoint" value="http://lod.hozo.jp/repositories/kgc2019"><br>
     Base URI: <input type="text" id="baseURI" value="http://kgc.knowledge-graph.jp/data/SpeckledBand/"><br>
     <button id="load">load</button>
     <button id="stop">stop</button>
