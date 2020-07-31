@@ -46,8 +46,8 @@ const yasgui = new Yasgui(document.getElementById("yasgui"), {
   copyEndpointOnNewTab: true  
 });
 var tab = yasgui.getTab()
-let query = "SELECT DISTINCT *\n"
-	+ "PREFIX kgc: <http://kgc.knowledge-graph.jp/ontology/kgc.owl#>\n"
+let query = "PREFIX kgc: <http://kgc.knowledge-graph.jp/ontology/kgc.owl#>\n"
+	+ "SELECT DISTINCT *\n"
 	+ "FROM <http://kgc.knowledge-graph.jp/data/SpeckledBand>\n"
 	+ "#FROM <http://kgc.knowledge-graph.jp/data/DancingMen>\n"
 	+ "#FROM <http://kgc.knowledge-graph.jp/data/ACaseOfIdentity>\n"
