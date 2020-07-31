@@ -47,14 +47,15 @@ const yasgui = new Yasgui(document.getElementById("yasgui"), {
 });
 var tab = yasgui.getTab()
 let query = "SELECT DISTINCT *\n"
+	+ "PREFIX kgc: <http://kgc.knowledge-graph.jp/ontology/kgc.owl#>\n"
 	+ "FROM <http://kgc.knowledge-graph.jp/data/SpeckledBand>\n"
 	+ "#FROM <http://kgc.knowledge-graph.jp/data/DancingMen>\n"
 	+ "#FROM <http://kgc.knowledge-graph.jp/data/ACaseOfIdentity>\n"
 	+ "#FROM <http://kgc.knowledge-graph.jp/data/DevilsFoot>\n"
 	+ "#FROM <http://kgc.knowledge-graph.jp/data/CrookedMan>\n"
 	+ "WHERE {\n"
-	+ "  ?s ?p ?o .\n"
-	+ "} limit 100";
+	+ "  ?s kgc:hasPredicate ?o .\n"
+	+ "}";
 var yasqe = tab.yasqe;
 yasqe.setValue(query);
 </script>
