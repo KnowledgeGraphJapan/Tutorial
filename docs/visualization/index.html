@@ -31,12 +31,16 @@ PREFIX kddm: <http://kgc.knowledge-graph.jp/data/DancingMen/>
 PREFIX kdci: <http://kgc.knowledge-graph.jp/data/ACaseOfIdentity/>
 PREFIX kddf: <http://kgc.knowledge-graph.jp/data/DevilsFoot/>
 PREFIX kdcm: <http://kgc.knowledge-graph.jp/data/CrookedMan/>
+PREFIX kdag: <http://kgc.knowledge-graph.jp/data/AbbeyGrange/>
+PREFIX kdsb: <http://kgc.knowledge-graph.jp/data/SilverBlaze/>
 SELECT DISTINCT ?s ?p ?o
 FROM <http://kgc.knowledge-graph.jp/data/SpeckledBand>
 #FROM <http://kgc.knowledge-graph.jp/data/DancingMen>
 #FROM <http://kgc.knowledge-graph.jp/data/ACaseOfIdentity>
 #FROM <http://kgc.knowledge-graph.jp/data/DevilsFoot>
 #FROM <http://kgc.knowledge-graph.jp/data/CrookedMan>
+#FROM <http://kgc.knowledge-graph.jp/data/AbbeyGrange>
+#FROM <http://kgc.knowledge-graph.jp/data/SilverBlaze>
 WHERE {
 ?s ?p ?o .
 #filter(?s = kdsb:155) #?sを指定してグラフを取得
