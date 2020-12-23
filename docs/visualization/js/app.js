@@ -129,7 +129,15 @@ $(function() {
       + "PREFIX kddf: <" + kddf +  ">\n"
       + "PREFIX kdcm: <" + kdcm +  ">\n"
       + "PREFIX kgc: <" + kgc +  ">\n"
-      + "SELECT * WHERE {\n"
+      + "SELECT *\n"
+      + "FROM <http://kgc.knowledge-graph.jp/data/SpeckledBand>\n"
+      + "FROM <http://kgc.knowledge-graph.jp/data/DancingMen>\n"
+      + "FROM <http://kgc.knowledge-graph.jp/data/ACaseOfIdentity>\n"
+      + "FROM <http://kgc.knowledge-graph.jp/data/DevilsFoot>\n"
+      + "FROM <http://kgc.knowledge-graph.jp/data/CrookedMan>\n"
+      + "FROM <http://kgc.knowledge-graph.jp/data/AbbeyGrange>\n"
+      + "FROM <http://kgc.knowledge-graph.jp/data/SilverBlaze>\n"
+      + "WHERE {\n"
       + "{ " + selectNodeId + " ?p ?o . }\n"
       + "UNION {?s ?p2 " + selectNodeId + " . }}";
     console.log(sparql)
