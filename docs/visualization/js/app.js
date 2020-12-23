@@ -8,6 +8,8 @@ $(function() {
   const kdci = "http://kgc.knowledge-graph.jp/data/ACaseOfIdentity/";
   const kddf = "http://kgc.knowledge-graph.jp/data/DevilsFoot/";
   const kdcm = "http://kgc.knowledge-graph.jp/data/CrookedMan/";
+  const kdsbl = "http://kgc.knowledge-graph.jp/data/SilverBlaze/";
+  const kdag = "http://kgc.knowledge-graph.jp/data/AbbeyGrange/";
   const rdfs = "http://www.w3.org/2000/01/rdf-schema#";
   const rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
@@ -50,6 +52,8 @@ $(function() {
 	  s = s.replace(kdci, "kdci:");
 	  s = s.replace(kddf, "kddf:");
 	  s = s.replace(kdcm, "kdcm:");
+	  s = s.replace(kdag, "kdag:");
+	  s = s.replace(kdsbl, "kdsbl:");
 	  s = s.replace(kgc, "kgc:");
 	  let p = bindings[i]["p"]["value"];
 	  p = p.replace(rdfs, "rdfs:");
@@ -65,6 +69,8 @@ $(function() {
 	  o = o.replace(kdci, "kdci:");
 	  o = o.replace(kddf, "kddf:");
 	  o = o.replace(kdcm, "kdcm:");
+	  o = o.replace(kdag, "kdag:");
+	  o = o.replace(kdsbl, "kdsbl:");
 	  o = o.replace(kgc,"kgc:");
 	  let nodeS = nodes.get(s);
 	  if(nodeS == undefined) {
@@ -128,6 +134,8 @@ $(function() {
       + "PREFIX kdci: <" + kdci +  ">\n"
       + "PREFIX kddf: <" + kddf +  ">\n"
       + "PREFIX kdcm: <" + kdcm +  ">\n"
+      + "PREFIX kdag: <" + kdag +  ">\n"
+      + "PREFIX kdsbl: <" + kdsbl +  ">\n"
       + "PREFIX kgc: <" + kgc +  ">\n"
       + "SELECT *\n"
       + "FROM <http://kgc.knowledge-graph.jp/data/SpeckledBand>\n"
@@ -160,6 +168,8 @@ $(function() {
 	    o = o.replace(kdci, "kdci:");
 	    o = o.replace(kddf, "kddf:");
 	    o = o.replace(kdcm, "kdcm:");
+	    o = o.replace(kdag, "kdag:");
+	    o = o.replace(kdsbl, "kdsbl:");
 	    o = o.replace(kgc, "kgc:");
 	    let oType = bindings[i]["o"]["type"];
 	    let nodeO = undefined;
@@ -195,6 +205,8 @@ $(function() {
 	    s = s.replace(kdci, "kdci:");
 	    s = s.replace(kddf, "kddf:");
 	    s = s.replace(kdcm, "kdcm:");
+	    s = s.replace(kdag, "kdag:");
+	    s = s.replace(kdsbl, "kdsbl:");
 	    s = s.replace(kgc, "kgc:");
 	    let nodeS = undefined;
 	    let p2 = bindings[i]["p2"]["value"];
