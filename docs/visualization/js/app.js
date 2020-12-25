@@ -10,6 +10,7 @@ $(function() {
   const kdcm = "http://kgc.knowledge-graph.jp/data/CrookedMan/";
   const kdsbl = "http://kgc.knowledge-graph.jp/data/SilverBlaze/";
   const kdag = "http://kgc.knowledge-graph.jp/data/AbbeyGrange/";
+  const kdrp = "http://kgc.knowledge-graph.jp/data/ResidentPatient/";
   const rdfs = "http://www.w3.org/2000/01/rdf-schema#";
   const rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
@@ -54,6 +55,7 @@ $(function() {
 	  s = s.replace(kdcm, "kdcm:");
 	  s = s.replace(kdag, "kdag:");
 	  s = s.replace(kdsbl, "kdsbl:");
+	  s = s.replace(kdrp, "kdrp:");
 	  s = s.replace(kgc, "kgc:");
 	  let p = bindings[i]["p"]["value"];
 	  p = p.replace(rdfs, "rdfs:");
@@ -71,6 +73,7 @@ $(function() {
 	  o = o.replace(kdcm, "kdcm:");
 	  o = o.replace(kdag, "kdag:");
 	  o = o.replace(kdsbl, "kdsbl:");
+	  o = o.replace(kdrp, "kdrp:");
 	  o = o.replace(kgc,"kgc:");
 	  let nodeS = nodes.get(s);
 	  if(nodeS == undefined) {
@@ -136,6 +139,7 @@ $(function() {
       + "PREFIX kdcm: <" + kdcm +  ">\n"
       + "PREFIX kdag: <" + kdag +  ">\n"
       + "PREFIX kdsbl: <" + kdsbl +  ">\n"
+      + "PREFIX kdrp: <" + kdrp +  ">\n"
       + "PREFIX kgc: <" + kgc +  ">\n"
       + "SELECT *\n"
       + "FROM <http://kgc.knowledge-graph.jp/data/SpeckledBand>\n"
@@ -145,6 +149,7 @@ $(function() {
       + "FROM <http://kgc.knowledge-graph.jp/data/CrookedMan>\n"
       + "FROM <http://kgc.knowledge-graph.jp/data/AbbeyGrange>\n"
       + "FROM <http://kgc.knowledge-graph.jp/data/SilverBlaze>\n"
+      + "FROM <http://kgc.knowledge-graph.jp/data/ResidentPatient>\n"
       + "WHERE {\n"
       + "{ " + selectNodeId + " ?p ?o . }\n"
       + "UNION {?s ?p2 " + selectNodeId + " . }}";
@@ -170,6 +175,7 @@ $(function() {
 	    o = o.replace(kdcm, "kdcm:");
 	    o = o.replace(kdag, "kdag:");
 	    o = o.replace(kdsbl, "kdsbl:");
+	    o = o.replace(kdrp, "kdrp:");
 	    o = o.replace(kgc, "kgc:");
 	    let oType = bindings[i]["o"]["type"];
 	    let nodeO = undefined;
@@ -207,6 +213,7 @@ $(function() {
 	    s = s.replace(kdcm, "kdcm:");
 	    s = s.replace(kdag, "kdag:");
 	    s = s.replace(kdsbl, "kdsbl:");
+	    s = s.replace(kdrp, "kdrp:");
 	    s = s.replace(kgc, "kgc:");
 	    let nodeS = undefined;
 	    let p2 = bindings[i]["p2"]["value"];
