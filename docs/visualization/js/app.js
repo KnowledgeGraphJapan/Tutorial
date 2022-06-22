@@ -32,7 +32,7 @@ $(function() {
 
   function getData(endpoint, sparql, baseURI) {
     clear();
-    let url = endpoint + "?query=" + encodeURIComponent(sparql);
+    let url = endpoint + "?query=" + encodeURIComponent(sparql) + "&format=application%2Fsparql-results%2Bjson";
     $.ajax({
       url: url,
       type: "GET",
@@ -154,7 +154,7 @@ $(function() {
       + "{ " + selectNodeId + " ?p ?o . }\n"
       + "UNION {?s ?p2 " + selectNodeId + " . }}";
     console.log(sparql)
-    let url = endpoint + "?query=" + encodeURIComponent(sparql);
+    let url = endpoint + "?query=" + encodeURIComponent(sparql) + "&format=application%2Fsparql-results%2Bjson";
     $.ajax({
       url: url,
       type: "GET",
