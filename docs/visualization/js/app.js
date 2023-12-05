@@ -1,4 +1,4 @@
-/* created by Shusaku Egami (http://idease.info/profile/) */
+/* created by Shusaku Egami (https://shusaku-egami.jp) */
 
 $(function() {
   /* variables start */
